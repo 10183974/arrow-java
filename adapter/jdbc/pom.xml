@@ -23,7 +23,7 @@ under the License.
   <parent>
     <groupId>org.apache.arrow</groupId>
     <artifactId>arrow-java-root</artifactId>
-    <version>19.0.0</version>
+    <version>v19.0.0-jdk8-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
@@ -124,6 +124,52 @@ under the License.
             <arg>-Werror</arg>
           </compilerArgs>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>shade</id>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>shaded</shadedClassifierName>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <!-- Bundle and relocate Jackson so the shaded jar never collides with the
+                   application's own Jackson. arrow-* stays external (kept in the reduced
+                   pom, so consumers still resolve memory/vector transitively). -->
+              <artifactSet>
+                <excludes>
+                  <exclude>org.apache.arrow:*</exclude>
+                  <exclude>org.immutables:*</exclude>
+                </excludes>
+              </artifactSet>
+              <relocations>
+                <relocation>
+                  <pattern>com.fasterxml.jackson</pattern>
+                  <shadedPattern>dlink.shaded_v19_0_0.com.fasterxml.jackson</shadedPattern>
+                </relocation>
+              </relocations>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

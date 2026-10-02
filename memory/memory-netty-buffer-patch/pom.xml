@@ -22,7 +22,7 @@ under the License.
   <parent>
     <groupId>org.apache.arrow</groupId>
     <artifactId>arrow-memory</artifactId>
-    <version>19.0.0</version>
+    <version>v19.0.0-jdk8-SNAPSHOT</version>
   </parent>
 
   <artifactId>arrow-memory-netty-buffer-patch</artifactId>
@@ -47,4 +47,46 @@ under the License.
       <artifactId>slf4j-api</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>shaded</shadedClassifierName>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <!-- own patch classes only: netty comes from arrow-memory-netty:shaded,
+                   memory-core/slf4j are declared by the consumer -->
+              <artifactSet>
+                <excludes>
+                  <exclude>org.apache.arrow:arrow-memory-core</exclude>
+                  <exclude>io.netty:*</exclude>
+                  <exclude>org.slf4j:*</exclude>
+                  <exclude>org.immutables:*</exclude>
+                </excludes>
+              </artifactSet>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

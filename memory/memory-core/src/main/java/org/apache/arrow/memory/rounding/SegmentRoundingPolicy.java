@@ -40,7 +40,7 @@ public class SegmentRoundingPolicy implements RoundingPolicy {
    *     SegmentRoundingPolicy#MIN_SEGMENT_SIZE}, or is not a power of 2.
    * @deprecated use {@link SegmentRoundingPolicy#SegmentRoundingPolicy(long)} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated
   @InlineMe(replacement = "this((long) segmentSize)")
   public SegmentRoundingPolicy(int segmentSize) {
     this((long) segmentSize);
@@ -68,7 +68,7 @@ public class SegmentRoundingPolicy implements RoundingPolicy {
     return (requestSize + (segmentSize - 1)) / segmentSize * segmentSize;
   }
 
-  @Deprecated(forRemoval = true)
+  @Deprecated
   public int getSegmentSize() {
     return LargeMemoryUtil.checkedCastToInt(segmentSize);
   }

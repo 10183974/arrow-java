@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -818,7 +819,7 @@ public class ValueVectorDataPopulator {
     final FieldType runEndType = FieldType.notNullable(Types.MinorType.INT.getType());
     final Field valueField = new Field("value", valueType, null);
     final Field runEndField = new Field("ree", runEndType, null);
-    vector.initializeChildrenFromFields(List.of(runEndField, valueField));
+    vector.initializeChildrenFromFields(Arrays.asList(runEndField, valueField));
 
     IntVector runEndsVector = (IntVector) vector.getRunEndsVector();
     runEndsVector.setValueCount(runCount);

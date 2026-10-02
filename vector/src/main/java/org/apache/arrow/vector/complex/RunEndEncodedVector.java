@@ -717,7 +717,7 @@ public class RunEndEncodedVector extends BaseValueVector implements FieldVector 
    */
   @Override
   public List<ArrowBuf> getFieldBuffers() {
-    return List.of();
+    return Collections.emptyList();
   }
 
   /**

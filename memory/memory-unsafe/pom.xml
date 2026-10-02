@@ -22,7 +22,7 @@ under the License.
   <parent>
     <groupId>org.apache.arrow</groupId>
     <artifactId>arrow-memory</artifactId>
-    <version>19.0.0</version>
+    <version>v19.0.0-jdk8-SNAPSHOT</version>
   </parent>
 
   <artifactId>arrow-memory-unsafe</artifactId>
@@ -39,5 +39,43 @@ under the License.
       <artifactId>value-annotations</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>shaded</shadedClassifierName>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <!-- arrow-memory-core is declared separately by the consumer; only embed small non-arrow deps -->
+              <artifactSet>
+                <excludes>
+                  <exclude>org.apache.arrow:arrow-memory-core</exclude>
+                </excludes>
+              </artifactSet>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

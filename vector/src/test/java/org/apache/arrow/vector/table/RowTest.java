@@ -738,10 +738,10 @@ class RowTest {
             (JsonStringHashMap<String, ?>) c.getStruct(STRUCT_VECTOR_NAME);
         @SuppressWarnings("unchecked")
         JsonStringHashMap<String, ?> struct1 = (JsonStringHashMap<String, ?>) c.getStruct(0);
-        int a = (int) struct.get("struct_int_child");
-        double b = (double) struct.get("struct_flt_child");
-        int a1 = (int) struct1.get("struct_int_child");
-        double b1 = (double) struct1.get("struct_flt_child");
+        int a = (Integer) struct.get("struct_int_child");
+        double b = (Double) struct.get("struct_flt_child");
+        int a1 = (Integer) struct1.get("struct_int_child");
+        double b1 = (Double) struct1.get("struct_flt_child");
         assertNotNull(struct);
         assertEquals(a, a1);
         assertEquals(b, b1);

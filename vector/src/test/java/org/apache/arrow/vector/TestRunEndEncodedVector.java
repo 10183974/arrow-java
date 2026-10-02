@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import org.apache.arrow.memory.BufferAllocator;
@@ -59,7 +60,7 @@ public class TestRunEndEncodedVector {
     final Field runEndField = new Field("ree", runEndType, null);
 
     try (RunEndEncodedVector reeVector = RunEndEncodedVector.empty("empty", allocator)) {
-      reeVector.initializeChildrenFromFields(List.of(runEndField, valueField));
+      reeVector.initializeChildrenFromFields(Arrays.asList(runEndField, valueField));
       reeVector.validate();
     }
   }
@@ -202,7 +203,7 @@ public class TestRunEndEncodedVector {
     final Field runEndField = new Field("ree", runEndType, null);
 
     return new Field(
-        fieldName, FieldType.notNullable(RunEndEncoded.INSTANCE), List.of(runEndField, valueField));
+        fieldName, FieldType.notNullable(RunEndEncoded.INSTANCE), Arrays.asList(runEndField, valueField));
   }
 
   private static void setConstantVector(

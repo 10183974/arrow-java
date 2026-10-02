@@ -22,7 +22,7 @@ under the License.
   <parent>
     <groupId>org.apache.arrow</groupId>
     <artifactId>arrow-java-root</artifactId>
-    <version>19.0.0</version>
+    <version>v19.0.0-jdk8-SNAPSHOT</version>
   </parent>
 
   <artifactId>arrow-dataset</artifactId>
@@ -193,6 +193,11 @@ under the License.
         <executions>
           <execution>
             <id>src</id>
+            <!-- The generated substrait proto classes are not referenced by dataset main code
+                 (AceroSubstraitConsumer passes a serialized plan as a ByteBuffer through JNI),
+                 and the proto source path only existed in the arrow-cpp 19 tree. Unbind the
+                 generation so the module builds against arrow-cpp 25 without that path. -->
+            <phase>none</phase>
             <goals>
               <goal>compile</goal>
             </goals>

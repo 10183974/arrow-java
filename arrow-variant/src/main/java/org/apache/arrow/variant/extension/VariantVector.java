@@ -17,6 +17,7 @@
 package org.apache.arrow.variant.extension;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.arrow.memory.ArrowBuf;
 import org.apache.arrow.memory.BufferAllocator;
@@ -89,7 +90,7 @@ public class VariantVector extends ExtensionTypeVector<StructVector> {
    * vector will be index 1.
    */
   public static List<Field> createVariantChildFields() {
-    return List.of(
+    return Arrays.asList(
         new Field(METADATA_VECTOR_NAME, new FieldType(false, Binary.INSTANCE, null), null),
         new Field(VALUE_VECTOR_NAME, new FieldType(false, Binary.INSTANCE, null), null));
   }

@@ -705,7 +705,7 @@ public class TestFixedSizeListVector {
           new Field(
               vector.getName(),
               FieldType.nullable(new ArrowType.FixedSizeList(3)),
-              List.of(expectedDataField));
+              Arrays.asList(expectedDataField));
 
       assertEquals(expectedField, writer.getField());
     }
@@ -748,7 +748,7 @@ public class TestFixedSizeListVector {
           new Field(
               vector.getName(),
               FieldType.nullable(new ArrowType.FixedSizeList(3)),
-              List.of(expectedDataField));
+              Arrays.asList(expectedDataField));
 
       assertEquals(expectedField, writer.getField());
     }
@@ -790,7 +790,7 @@ public class TestFixedSizeListVector {
           new Field(
               vector.getName(),
               FieldType.nullable(new ArrowType.FixedSizeList(3)),
-              List.of(expectedDataField));
+              Arrays.asList(expectedDataField));
 
       assertEquals(expectedField, writer.getField());
     }
@@ -829,7 +829,7 @@ public class TestFixedSizeListVector {
           new Field(
               vector.getName(),
               FieldType.nullable(new ArrowType.FixedSizeList(2)),
-              List.of(expectedDataField));
+              Arrays.asList(expectedDataField));
 
       assertEquals(expectedField, writer.getField());
     }
@@ -838,7 +838,7 @@ public class TestFixedSizeListVector {
   private int[] convertListToIntArray(List<?> list) {
     int[] values = new int[list.size()];
     for (int i = 0; i < list.size(); i++) {
-      values[i] = (int) list.get(i);
+      values[i] = ((Number) list.get(i)).intValue();
     }
     return values;
   }

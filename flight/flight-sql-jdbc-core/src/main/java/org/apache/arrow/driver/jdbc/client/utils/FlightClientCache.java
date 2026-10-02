@@ -18,7 +18,7 @@ package org.apache.arrow.driver.jdbc.client.utils;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 import org.apache.arrow.util.VisibleForTesting;
 
 /**
@@ -35,7 +35,7 @@ public final class FlightClientCache {
   @VisibleForTesting Cache<String, ClientCacheEntry> clientCache;
 
   public FlightClientCache() {
-    this.clientCache = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(600)).build();
+    this.clientCache = Caffeine.newBuilder().expireAfterWrite(600, TimeUnit.SECONDS).build();
   }
 
   public boolean isDud(String key) {

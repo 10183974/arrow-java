@@ -16,6 +16,8 @@
  */
 package org.apache.arrow.driver.jdbc.client.utils;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -32,7 +34,7 @@ class FlightLocationQueueTest {
   void basicOperation() {
     Location location1 = Location.forGrpcInsecure("localhost", 8080);
     Location location2 = Location.forGrpcInsecure("localhost", 8081);
-    FlightLocationQueue queue = new FlightLocationQueue(null, List.of(location1, location2));
+    FlightLocationQueue queue = new FlightLocationQueue(null, Arrays.asList(location1, location2));
     assertTrue(queue.hasNext());
     assertEquals(location1, queue.next());
     assertTrue(queue.hasNext());
@@ -46,7 +48,7 @@ class FlightLocationQueueTest {
     Location location2 = Location.forGrpcInsecure("localhost", 8081);
     FlightClientCache cache = new FlightClientCache();
     cache.markLocationAsDud(location1.toString());
-    FlightLocationQueue queue = new FlightLocationQueue(cache, List.of(location1, location2));
+    FlightLocationQueue queue = new FlightLocationQueue(cache, Arrays.asList(location1, location2));
     assertTrue(queue.hasNext());
     assertEquals(location2, queue.next());
     assertTrue(queue.hasNext());

@@ -36,7 +36,7 @@ public interface AllocationReservation extends AutoCloseable {
    * @throws IllegalStateException if called after buffer() is used to allocate the reservation
    * @deprecated use {@link #add(long)} instead
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated
   boolean add(int nBytes);
 
   /**
@@ -59,7 +59,7 @@ public interface AllocationReservation extends AutoCloseable {
    * @return true if the reservation can be satisfied, false otherwise
    * @deprecated use {@link #reserve(long)} instead
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated
   boolean reserve(int nBytes);
 
   /**

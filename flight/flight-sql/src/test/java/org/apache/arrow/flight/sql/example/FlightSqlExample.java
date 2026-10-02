@@ -1051,19 +1051,19 @@ public class FlightSqlExample implements FlightSqlProducer, AutoCloseable {
         int counter = 0;
         while (flightStream.next()) {
           if (counter > 0) {
-            Files.writeString(tempFile, "\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+            Files.write(
+                tempFile, "\n".getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
           }
           counter += 1;
           root = flightStream.getRoot();
-          Files.writeString(
+          Files.write(
               tempFile,
-              getRootAsCSVNoHeader(root),
-              StandardCharsets.UTF_8,
+              getRootAsCSVNoHeader(root).getBytes(StandardCharsets.UTF_8),
               StandardOpenOption.APPEND);
         }
 
         if (counter > 0) {
-          Files.writeString(tempFile, "\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+          Files.write(tempFile, "\n".getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
         }
 
         if (!isNull(root)) {

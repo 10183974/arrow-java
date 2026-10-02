@@ -187,7 +187,7 @@ class BufferImportTypeVisitor implements ArrowType.ArrowTypeVisitor<List<ArrowBu
 
   @Override
   public List<ArrowBuf> visit(ArrowType.RunEndEncoded type) {
-    return List.of();
+    return Collections.emptyList();
   }
 
   @Override

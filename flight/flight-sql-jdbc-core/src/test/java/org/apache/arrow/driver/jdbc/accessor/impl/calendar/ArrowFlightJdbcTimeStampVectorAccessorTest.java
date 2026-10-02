@@ -32,7 +32,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
-import java.util.Objects;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -211,7 +210,7 @@ public class ArrowFlightJdbcTimeStampVectorAccessorTest {
       Supplier<TimeStampVector> vectorSupplier, String vectorType, String timeZone)
       throws Exception {
     setup(vectorSupplier);
-    final String expectedTimeZone = Objects.requireNonNullElse(timeZone, "UTC");
+    final String expectedTimeZone = timeZone != null ? timeZone : "UTC";
 
     accessorIterator.iterate(
         vector,
@@ -231,7 +230,7 @@ public class ArrowFlightJdbcTimeStampVectorAccessorTest {
       Supplier<TimeStampVector> vectorSupplier, String vectorType, String timeZone)
       throws Exception {
     setup(vectorSupplier);
-    final String expectedTimeZone = Objects.requireNonNullElse(timeZone, "UTC");
+    final String expectedTimeZone = timeZone != null ? timeZone : "UTC";
     final boolean vectorHasTz = timeZone != null;
     accessorIterator.iterate(
         vector,
@@ -255,7 +254,7 @@ public class ArrowFlightJdbcTimeStampVectorAccessorTest {
       Supplier<TimeStampVector> vectorSupplier, String vectorType, String timeZone)
       throws Exception {
     setup(vectorSupplier);
-    final String expectedTimeZone = Objects.requireNonNullElse(timeZone, "UTC");
+    final String expectedTimeZone = timeZone != null ? timeZone : "UTC";
     final boolean vectorHasTz = timeZone != null;
     accessorIterator.iterate(
         vector,
@@ -280,7 +279,7 @@ public class ArrowFlightJdbcTimeStampVectorAccessorTest {
       Supplier<TimeStampVector> vectorSupplier, String vectorType, String timeZone)
       throws Exception {
     setup(vectorSupplier);
-    final String expectedTimeZone = Objects.requireNonNullElse(timeZone, "UTC");
+    final String expectedTimeZone = timeZone != null ? timeZone : "UTC";
     final boolean vectorHasTz = timeZone != null;
     accessorIterator.iterate(
         vector,

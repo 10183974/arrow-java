@@ -22,7 +22,7 @@ under the License.
   <parent>
     <groupId>org.apache.arrow</groupId>
     <artifactId>arrow-java-root</artifactId>
-    <version>19.0.0</version>
+    <version>v19.0.0-jdk8-SNAPSHOT</version>
   </parent>
   <artifactId>arrow-compression</artifactId>
   <name>Arrow Compression</name>
@@ -58,4 +58,57 @@ under the License.
       <version>1.5.7-6</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>shade</id>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>shaded</shadedClassifierName>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <!-- Embed commons-compress (and its org.apache.commons transitives) and
+                   relocate them so the application's own commons versions never clash.
+                   arrow-* stays external (consumed via its own coordinates); zstd-jni is a
+                   JNI artifact supplied at runtime and is intentionally not embedded. -->
+              <artifactSet>
+                <excludes>
+                  <exclude>org.apache.arrow:*</exclude>
+                  <exclude>com.github.luben:zstd-jni</exclude>
+                  <exclude>org.immutables:*</exclude>
+                </excludes>
+              </artifactSet>
+              <relocations>
+                <relocation>
+                  <pattern>org.apache.commons</pattern>
+                  <shadedPattern>dlink.shaded_v19_0_0.org.apache.commons</shadedPattern>
+                </relocation>
+              </relocations>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

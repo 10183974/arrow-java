@@ -2179,7 +2179,7 @@ public class TestListViewVector {
     */
     try (ListViewVector listViewVector = ListViewVector.empty("sourceVector", allocator)) {
       initializeListViewVector(
-          listViewVector, List.of(10, 20, 30, 40, 50), List.of(1, 1), List.of(0, 3), List.of(3, 2));
+          listViewVector, Arrays.asList(10, 20, 30, 40, 50), Arrays.asList(1, 1), Arrays.asList(0, 3), Arrays.asList(3, 2));
 
       assertEquals(0, listViewVector.getElementStartIndex(0));
       assertEquals(3, listViewVector.getElementEndIndex(0));
@@ -2210,10 +2210,10 @@ public class TestListViewVector {
     try (ListViewVector listViewVector = ListViewVector.empty("sourceVector", allocator)) {
       initializeListViewVector(
           listViewVector,
-          List.of(1, 2, 3, 4, 5, 6),
-          List.of(1, 1, 1),
-          List.of(4, 2, 0),
-          List.of(2, 2, 2));
+          Arrays.asList(1, 2, 3, 4, 5, 6),
+          Arrays.asList(1, 1, 1),
+          Arrays.asList(4, 2, 0),
+          Arrays.asList(2, 2, 2));
 
       assertEquals(4, listViewVector.getElementStartIndex(0));
       assertEquals(6, listViewVector.getElementEndIndex(0));
@@ -2236,10 +2236,10 @@ public class TestListViewVector {
     try (ListViewVector listViewVector = ListViewVector.empty("sourceVector", allocator)) {
       initializeListViewVector(
           listViewVector,
-          List.of(1, 2, 3, 4, 5),
-          List.of(1, 1, 1),
-          List.of(0, 1, 4),
-          List.of(2, 3, 1));
+          Arrays.asList(1, 2, 3, 4, 5),
+          Arrays.asList(1, 1, 1),
+          Arrays.asList(0, 1, 4),
+          Arrays.asList(2, 3, 1));
 
       assertEquals(0, listViewVector.getElementStartIndex(0));
       assertEquals(2, listViewVector.getElementEndIndex(0));
@@ -2290,10 +2290,10 @@ public class TestListViewVector {
     */
     initializeListViewVector(
         listViewVector,
-        List.of(0, -127, 127, 50, 12, -7, 25),
-        List.of(1, 1, 1, 0, 1),
-        List.of(4, 7, 0, 0, 3),
-        List.of(3, 0, 4, 0, 2));
+        Arrays.asList(0, -127, 127, 50, 12, -7, 25),
+        Arrays.asList(1, 1, 1, 0, 1),
+        Arrays.asList(4, 7, 0, 0, 3),
+        Arrays.asList(3, 0, 4, 0, 2));
   }
 
   private void initializeListViewVector(

@@ -281,7 +281,7 @@ public class TestValidateVector {
             new Field(
                 "ree",
                 FieldType.notNullable(RunEndEncoded.INSTANCE),
-                List.of(runEndField, valueField)),
+                Arrays.asList(runEndField, valueField)),
             allocator,
             null)) {
       vector.validate();

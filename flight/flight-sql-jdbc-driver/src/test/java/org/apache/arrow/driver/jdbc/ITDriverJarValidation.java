@@ -122,7 +122,7 @@ public class ITDriverJarValidation {
     try (JarFile jar = new JarFile(getJdbcJarFile())) {
       Stream<Executable> executables =
           jar.stream()
-              .filter(Predicate.not(JarEntry::isDirectory))
+              .filter(entry -> !entry.isDirectory())
               .map(
                   entry -> {
                     return () -> checkEntryAllowed(entry.getName());

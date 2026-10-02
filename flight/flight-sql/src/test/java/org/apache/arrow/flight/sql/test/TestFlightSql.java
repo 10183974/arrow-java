@@ -578,11 +578,11 @@ public class TestFlightSql {
   @Test
   public void testBulkIngest() throws IOException {
     // For bulk ingest DerbyDB requires uppercase column names
-    var keyName = new Field("KEYNAME", FieldType.nullable(new ArrowType.Utf8()), null);
-    var value = new Field("VALUE", FieldType.nullable(new ArrowType.Int(32, true)), null);
-    var foreignId = new Field("FOREIGNID", FieldType.nullable(new ArrowType.Int(32, true)), null);
+    Field keyName = new Field("KEYNAME", FieldType.nullable(new ArrowType.Utf8()), null);
+    Field value = new Field("VALUE", FieldType.nullable(new ArrowType.Int(32, true)), null);
+    Field foreignId = new Field("FOREIGNID", FieldType.nullable(new ArrowType.Int(32, true)), null);
 
-    Schema dataSchema = new Schema(List.of(keyName, value, foreignId));
+    Schema dataSchema = new Schema(Arrays.asList(keyName, value, foreignId));
 
     try (final VectorSchemaRoot ingestRoot = VectorSchemaRoot.create(dataSchema, allocator);
         final VarCharVector keyNamesToBeDeletedVector = new VarCharVector(keyName, allocator)) {
@@ -674,7 +674,7 @@ public class TestFlightSql {
         RuntimeException.class,
         () -> {
           sqlClient.executeIngest(
-              VectorSchemaRoot.create(new Schema(List.of()), allocator),
+              VectorSchemaRoot.create(new Schema(Arrays.asList()), allocator),
               new FlightSqlClient.ExecuteIngestOptions(
                   "INTTABLE",
                   TableDefinitionOptions.newBuilder()

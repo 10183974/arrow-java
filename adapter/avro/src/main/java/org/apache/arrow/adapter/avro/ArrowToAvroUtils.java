@@ -17,6 +17,7 @@
 package org.apache.arrow.adapter.avro;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -411,7 +412,7 @@ public class ArrowToAvroUtils {
           Field safeItemField =
               new Field("item", itemField.getFieldType(), itemField.getChildren());
           Field safeListField =
-              new Field(field.getName(), field.getFieldType(), List.of(safeItemField));
+              new Field(field.getName(), field.getFieldType(), Collections.singletonList(safeItemField));
           return buildArraySchema(builder.array(), safeListField, namespace, dictionaries);
         } else {
           return buildArraySchema(builder.array(), field, namespace, dictionaries);
@@ -431,7 +432,7 @@ public class ArrowToAvroUtils {
       List<Field> unionFields,
       String namespace,
       DictionaryProvider dictionaries) {
-    for (var field : unionFields) {
+    for (Field field : unionFields) {
       accumulator = buildBaseTypeSchema(accumulator.and(), field, namespace, dictionaries);
     }
     return accumulator.endUnion();

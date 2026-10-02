@@ -30,7 +30,9 @@ import java.util.UUID;
 import org.apache.arrow.memory.ArrowBuf;
 import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.memory.RootAllocator;
+import org.apache.parquet.variant.VariantArrayBuilder;
 import org.apache.parquet.variant.VariantBuilder;
+import org.apache.parquet.variant.VariantObjectBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -264,7 +266,7 @@ public class TestVariant {
   @Test
   void testObjectType() {
     VariantBuilder builder = new VariantBuilder();
-    var objBuilder = builder.startObject();
+    VariantObjectBuilder objBuilder = builder.startObject();
     objBuilder.appendKey("name");
     objBuilder.appendString("test");
     objBuilder.appendKey("value");
@@ -299,7 +301,7 @@ public class TestVariant {
   @Test
   void testObjectFieldAtIndex() {
     VariantBuilder builder = new VariantBuilder();
-    var objBuilder = builder.startObject();
+    VariantObjectBuilder objBuilder = builder.startObject();
     objBuilder.appendKey("alpha");
     objBuilder.appendInt(1);
     objBuilder.appendKey("beta");
@@ -324,7 +326,7 @@ public class TestVariant {
   @Test
   void testArrayType() {
     VariantBuilder builder = new VariantBuilder();
-    var arrayBuilder = builder.startArray();
+    VariantArrayBuilder arrayBuilder = builder.startArray();
     arrayBuilder.appendInt(1);
     arrayBuilder.appendInt(2);
     arrayBuilder.appendInt(3);
@@ -360,9 +362,9 @@ public class TestVariant {
   @Test
   void testNestedStructure() {
     VariantBuilder builder = new VariantBuilder();
-    var objBuilder = builder.startObject();
+    VariantObjectBuilder objBuilder = builder.startObject();
     objBuilder.appendKey("items");
-    var arrayBuilder = objBuilder.startArray();
+    VariantArrayBuilder arrayBuilder = objBuilder.startArray();
     arrayBuilder.appendString("a");
     arrayBuilder.appendString("b");
     objBuilder.endArray();

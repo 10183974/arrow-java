@@ -22,7 +22,7 @@ under the License.
   <parent>
     <groupId>org.apache.arrow</groupId>
     <artifactId>arrow-memory</artifactId>
-    <version>19.0.0</version>
+    <version>v19.0.0-jdk8-SNAPSHOT</version>
   </parent>
 
   <artifactId>arrow-memory-netty</artifactId>
@@ -42,7 +42,10 @@ under the License.
     <dependency>
       <groupId>io.netty</groupId>
       <artifactId>netty-buffer</artifactId>
-      <scope>provided</scope>
+      <!-- must be compile scope so the shaded artifact embeds netty; the buffer-patch
+           mechanism requires original io.netty classes (package-private access), so
+           netty cannot be relocated here -->
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.netty</groupId>
@@ -63,6 +66,48 @@ under the License.
       <artifactId>value-annotations</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>shaded</shadedClassifierName>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <!-- io.netty is intentionally NOT relocated: the buffer-patch classes live in
+                   the io.netty.buffer package and need package-private access to netty internals -->
+              <artifactSet>
+                <excludes>
+                  <exclude>org.apache.arrow:arrow-memory-core</exclude>
+                  <exclude>org.apache.arrow:arrow-memory-netty-buffer-patch</exclude>
+                  <exclude>org.immutables:*</exclude>
+                  <exclude>org.slf4j:*</exclude>
+                </excludes>
+              </artifactSet>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
   <profiles>
     <profile>

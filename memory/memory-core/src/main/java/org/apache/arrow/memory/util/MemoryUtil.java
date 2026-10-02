@@ -18,7 +18,6 @@ package org.apache.arrow.memory.util;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InaccessibleObjectException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -87,7 +86,8 @@ public class MemoryUtil {
       try {
         addressField.setAccessible(true);
         maybeOffset = UNSAFE.objectFieldOffset(addressField);
-      } catch (InaccessibleObjectException e) {
+      } catch (RuntimeException e) {
+        // InaccessibleObjectException (JDK 9+) is a RuntimeException; JDK 8 throws SecurityException
         maybeOffset = -1;
         logger.debug(
             "Cannot access the address field of java.nio.Buffer. DirectBuffer operations wont be available",
@@ -119,7 +119,7 @@ public class MemoryUtil {
                     } catch (SecurityException e) {
                       logger.debug("Cannot get constructor for direct buffer allocation", e);
                       return e;
-                    } catch (InaccessibleObjectException e) {
+                    } catch (RuntimeException e) {
                       logger.debug("Cannot get constructor for direct buffer allocation", e);
                       return e;
                     }

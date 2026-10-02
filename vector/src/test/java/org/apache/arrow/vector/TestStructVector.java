@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -350,7 +351,7 @@ public class TestStructVector {
     UuidType uuidType = UuidType.INSTANCE;
     Field uuidField = new Field("struct_child", FieldType.nullable(uuidType), null);
     Field structField =
-        new Field("struct", FieldType.nullable(new ArrowType.Struct()), List.of(uuidField));
+        new Field("struct", FieldType.nullable(new ArrowType.Struct()), Arrays.asList(uuidField));
     StructVector s1 = new StructVector(structField, allocator, null);
     StructVector s2 = (StructVector) structField.createVector(allocator);
     s1.close();
@@ -362,7 +363,7 @@ public class TestStructVector {
     UuidType uuidType = UuidType.INSTANCE;
     Field uuidField = new Field("uuid_child", FieldType.nullable(uuidType), null);
     Field structField =
-        new Field("struct", FieldType.nullable(new ArrowType.Struct()), List.of(uuidField));
+        new Field("struct", FieldType.nullable(new ArrowType.Struct()), Arrays.asList(uuidField));
 
     StructVector s1 = (StructVector) structField.createVector(allocator);
     UuidVector uuidVector =

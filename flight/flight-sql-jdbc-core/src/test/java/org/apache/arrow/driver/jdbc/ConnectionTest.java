@@ -624,12 +624,12 @@ public class ConnectionTest {
 
       assertTrue(connection.isValid(0));
 
-      var actualUserAgent =
+      String actualUserAgent =
           FLIGHT_SERVER_TEST_EXTENSION
               .getInterceptorFactory()
               .getHeader(FlightMethod.HANDSHAKE, "user-agent");
 
-      var expectedUserAgent =
+      String expectedUserAgent =
           "JDBC Flight SQL Driver " + driverVersion.getDriverVersion().versionString;
       // Driver appends version to grpc user-agent header. Assert the header starts
       // with the

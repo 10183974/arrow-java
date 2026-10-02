@@ -30,9 +30,8 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Objects;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.function.IntSupplier;
@@ -83,7 +82,7 @@ public class ArrowFlightJdbcTimeStampVectorAccessor extends ArrowFlightJdbcAcces
   public <T> T getObject(final Class<T> type) throws SQLException {
     final Object value;
     if (!this.isZoned
-        & Set.of(OffsetDateTime.class, ZonedDateTime.class, Instant.class).contains(type)) {
+        & Arrays.asList(OffsetDateTime.class, ZonedDateTime.class, Instant.class).contains(type)) {
       throw new SQLException(
           "Vectors without timezones can't be converted to objects with offset/tz info.");
     } else if (type == OffsetDateTime.class) {
@@ -252,7 +251,7 @@ public class ArrowFlightJdbcTimeStampVectorAccessor extends ArrowFlightJdbcAcces
     ArrowType.Timestamp arrowType =
         (ArrowType.Timestamp) vector.getField().getFieldType().getType();
 
-    String timezoneName = Objects.requireNonNullElse(arrowType.getTimezone(), "UTC");
+    String timezoneName = arrowType.getTimezone() != null ? arrowType.getTimezone() : "UTC";
     return TimeZone.getTimeZone(timezoneName);
   }
 

@@ -46,6 +46,7 @@ import org.apache.arrow.vector.complex.writer.BaseWriter;
 import org.apache.arrow.vector.ipc.ArrowFileReader;
 import org.apache.arrow.vector.ipc.ArrowFileWriter;
 import org.apache.arrow.vector.types.pojo.ArrowType;
+import org.apache.arrow.vector.complex.reader.FieldReader;
 import org.apache.arrow.vector.types.pojo.ArrowType.ExtensionType;
 import org.apache.arrow.vector.types.pojo.ExtensionTypeRegistry;
 import org.apache.arrow.vector.types.pojo.Field;
@@ -239,7 +240,7 @@ public class TestVariantExtensionType {
       vector.setSafe(0, TestVariant.variantString("hello"));
       vector.setValueCount(1);
 
-      var reader = vector.getReader();
+      FieldReader reader = vector.getReader();
       reader.setPosition(0);
 
       assertThrows(

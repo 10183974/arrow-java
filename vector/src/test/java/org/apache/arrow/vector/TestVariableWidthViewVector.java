@@ -274,7 +274,7 @@ public class TestVariableWidthViewVector {
     try (final ViewVarCharVector viewVarCharVector = new ViewVarCharVector("myvector", allocator)) {
       viewVarCharVector.allocateNew(1, 1);
       byte[] str6 = TestUtils.generateRandomString(40).getBytes();
-      final List<byte[]> strings = List.of(STR0, STR1, STR2, STR3, STR4, STR5, str6);
+      final List<byte[]> strings = Arrays.asList(STR0, STR1, STR2, STR3, STR4, STR5, str6);
 
       // set data to a position out of capacity index
       Map<Integer, byte[]> expected = new HashMap<>();
@@ -381,7 +381,7 @@ public class TestVariableWidthViewVector {
   public void testSetNullableViewVarCharHolder() {
     try (final ViewVarCharVector viewVarCharVector = new ViewVarCharVector("myvector", allocator)) {
       viewVarCharVector.allocateNew(0, 0);
-      final List<byte[]> strings = List.of(STR0, STR1, STR2, STR3, STR4, STR5);
+      final List<byte[]> strings = Arrays.asList(STR0, STR1, STR2, STR3, STR4, STR5);
 
       NullableViewVarCharHolder stringHolder = new NullableViewVarCharHolder();
 
@@ -417,7 +417,7 @@ public class TestVariableWidthViewVector {
     try (final ViewVarBinaryVector viewVarBinaryVector =
         new ViewVarBinaryVector("myvector", allocator)) {
       viewVarBinaryVector.allocateNew(0, 0);
-      final List<byte[]> strings = List.of(STR0, STR1, STR2, STR3, STR4, STR5);
+      final List<byte[]> strings = Arrays.asList(STR0, STR1, STR2, STR3, STR4, STR5);
 
       NullableViewVarBinaryHolder holder = new NullableViewVarBinaryHolder();
 

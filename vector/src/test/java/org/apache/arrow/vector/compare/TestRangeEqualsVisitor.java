@@ -1031,7 +1031,7 @@ public class TestRangeEqualsVisitor {
           new Field(
               "ree_float",
               FieldType.notNullable(RunEndEncoded.INSTANCE),
-              List.of(runEndField, valueField));
+              Arrays.asList(runEndField, valueField));
 
       try (final RunEndEncodedVector encodedVector1 =
               new RunEndEncodedVector(field, allocator, reeVector, vector1, null);

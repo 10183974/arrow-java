@@ -22,7 +22,7 @@ under the License.
   <parent>
     <groupId>org.apache.arrow</groupId>
     <artifactId>arrow-flight</artifactId>
-    <version>19.0.0</version>
+    <version>v19.0.0-jdk8-SNAPSHOT</version>
   </parent>
 
   <artifactId>flight-sql-jdbc-core</artifactId>
@@ -176,7 +176,8 @@ under the License.
     <dependency>
       <groupId>com.github.ben-manes.caffeine</groupId>
       <artifactId>caffeine</artifactId>
-      <version>3.2.3</version>
+      <!-- JDK 8: caffeine 3.x requires Java 11; 2.9.3 is the last Java 8-compatible line. -->
+      <version>2.9.3</version>
     </dependency>
 
     <dependency>

@@ -794,7 +794,7 @@ public class RoundtripTest {
   @Test
   public void testRunEndEncodedVector() {
     try (final RunEndEncodedVector vector = RunEndEncodedVector.empty("v", allocator)) {
-      setVector(vector, List.of(1, 3), List.of(1, 2));
+      setVector(vector, Arrays.asList(1, 3), Arrays.asList(1, 2));
       assertTrue(roundtrip(vector, RunEndEncodedVector.class));
     }
   }
@@ -802,7 +802,7 @@ public class RoundtripTest {
   @Test
   public void testEmptyRunEndEncodedVector() {
     try (final RunEndEncodedVector vector = RunEndEncodedVector.empty("v", allocator)) {
-      setVector(vector, List.of(), List.of());
+      setVector(vector, Arrays.asList(), Arrays.asList());
       assertTrue(roundtrip(vector, RunEndEncodedVector.class));
     }
   }

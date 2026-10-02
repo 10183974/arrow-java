@@ -71,7 +71,8 @@ public interface CompressionCodec {
     /** Creates the codec based on the codec type and compression level. */
     CompressionCodec createCodec(CompressionUtil.CodecType codecType, int compressionLevel);
 
-    private static Factory bestEffort() {
+    // JDK 8: interface methods cannot be private, so this helper is implicitly public
+    static Factory bestEffort() {
       final ServiceLoader<Factory> serviceLoader = ServiceLoader.load(Factory.class);
       final Map<CompressionUtil.CodecType, Factory> factories =
           new EnumMap<>(CompressionUtil.CodecType.class);

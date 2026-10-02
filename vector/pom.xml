@@ -22,7 +22,7 @@ under the License.
   <parent>
     <groupId>org.apache.arrow</groupId>
     <artifactId>arrow-java-root</artifactId>
-    <version>19.0.0</version>
+    <version>v19.0.0-jdk8-SNAPSHOT</version>
   </parent>
   <artifactId>arrow-vector</artifactId>
   <name>Arrow Vectors</name>
@@ -162,13 +162,17 @@ under the License.
                   <include>com.google.flatbuffers:*</include>
                 </includes>
               </artifactSet>
+              <!-- The main artifact is the plain jar (shaded is attached via classifier), and
+                   plain arrow-vector classes reference org.apache.arrow.flatbuf.* at runtime, so
+                   arrow-format must stay a declared transitive dependency. A dependency-reduced
+                   pom would strip it and break plain-jar consumers (e.g. arrow-orc). -->
               <createDependencyReducedPom>false</createDependencyReducedPom>
               <shadedArtifactAttached>true</shadedArtifactAttached>
-              <shadedClassifierName>shade-format-flatbuffers</shadedClassifierName>
+              <shadedClassifierName>shaded</shadedClassifierName>
               <relocations>
                 <relocation>
                   <pattern>com.google.flatbuffers</pattern>
-                  <shadedPattern>arrow.vector.com.google.flatbuffers</shadedPattern>
+                  <shadedPattern>dlink.shaded_v19_0_0.com.google.flatbuffers</shadedPattern>
                 </relocation>
               </relocations>
               <filters>

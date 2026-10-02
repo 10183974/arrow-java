@@ -89,6 +89,7 @@ import org.apache.arrow.vector.types.pojo.FieldType;
 import org.apache.arrow.vector.util.JsonStringArrayList;
 import org.apache.arrow.vector.util.JsonStringHashMap;
 import org.apache.avro.Conversions;
+import org.apache.avro.LogicalType;
 import org.apache.avro.LogicalTypes;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
@@ -1138,7 +1139,7 @@ public class ArrowToAvroDataTest {
 
   private static BigDecimal decodeFixedDecimal(GenericRecord record, String fieldName) {
     GenericData.Fixed fixed = (GenericData.Fixed) record.get(fieldName);
-    var logicalType = LogicalTypes.fromSchema(fixed.getSchema());
+    LogicalType logicalType = LogicalTypes.fromSchema(fixed.getSchema());
     return new Conversions.DecimalConversion().fromFixed(fixed, fixed.getSchema(), logicalType);
   }
 
