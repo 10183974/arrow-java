@@ -147,7 +147,7 @@ under the License.
               <createDependencyReducedPom>true</createDependencyReducedPom>
               <!-- flight-sql:shaded is meant to sit alongside flight-core:shaded. It embeds
                    and relocates guava / protobuf / commons-cli, and rewrites its io.grpc
-                   references to the same dlink.shaded_v19_0_0.io.grpc namespace whose classes
+                   references to the same tianshu.shaded_v19_0_0.io.grpc namespace whose classes
                    are provided by flight-core:shaded (grpc/netty are not re-bundled here).
                    arrow-* stays external and is preserved in the reduced pom. -->
               <artifactSet>
@@ -161,23 +161,23 @@ under the License.
               <relocations>
                 <relocation>
                   <pattern>io.grpc</pattern>
-                  <shadedPattern>dlink.shaded_v19_0_0.io.grpc</shadedPattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.io.grpc</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>com.google.common</pattern>
-                  <shadedPattern>dlink.shaded_v19_0_0.com.google.common</shadedPattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.com.google.common</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>com.google.thirdparty</pattern>
-                  <shadedPattern>dlink.shaded_v19_0_0.com.google.thirdparty</shadedPattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.com.google.thirdparty</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>com.google.protobuf</pattern>
-                  <shadedPattern>dlink.shaded_v19_0_0.com.google.protobuf</shadedPattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.com.google.protobuf</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>org.apache.commons</pattern>
-                  <shadedPattern>dlink.shaded_v19_0_0.org.apache.commons</shadedPattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.org.apache.commons</shadedPattern>
                 </relocation>
               </relocations>
               <filters>

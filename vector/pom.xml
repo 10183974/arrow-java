@@ -172,7 +172,7 @@ under the License.
               <relocations>
                 <relocation>
                   <pattern>com.google.flatbuffers</pattern>
-                  <shadedPattern>dlink.shaded_v19_0_0.com.google.flatbuffers</shadedPattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.com.google.flatbuffers</shadedPattern>
                 </relocation>
               </relocations>
               <filters>
