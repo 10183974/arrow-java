@@ -206,6 +206,93 @@ under the License.
           </systemPropertyVariables>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>shade</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>shaded</shadedClassifierName>
+              <!-- Bundle+relocate the conflict-prone third-party libs this driver pulls in
+                   (avatica / caffeine / checker-qual / commons-io / gson). grpc / netty /
+                   guava / protobuf / jackson references are rewritten to the shared
+                   tianshu.shaded_v19_0_0 namespace supplied by flight-core:shaded, so they
+                   are not re-bundled here. arrow-* and slf4j stay external. -->
+              <artifactSet>
+                <includes>
+                  <include>org.apache.calcite.avatica:*</include>
+                  <include>commons-io:commons-io</include>
+                  <include>com.github.ben-manes.caffeine:caffeine</include>
+                  <include>org.checkerframework:checker-qual</include>
+                  <include>com.google.code.gson:gson</include>
+                </includes>
+              </artifactSet>
+              <relocations>
+                <relocation>
+                  <pattern>org.apache.calcite.avatica</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.org.apache.calcite.avatica</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.apache.commons.io</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.org.apache.commons.io</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.github.benmanes.caffeine</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.com.github.benmanes.caffeine</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.checkerframework</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.org.checkerframework</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.google.gson</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.com.google.gson</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>io.grpc</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.io.grpc</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>io.netty</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.io.netty</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.google.common</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.com.google.common</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.google.protobuf</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.com.google.protobuf</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.fasterxml.jackson</pattern>
+                  <shadedPattern>tianshu.shaded_v19_0_0.com.fasterxml.jackson</shadedPattern>
+                </relocation>
+              </relocations>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>module-info.class</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
